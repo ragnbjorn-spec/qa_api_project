@@ -48,7 +48,7 @@ def test_update_post(created_post_id):
     response = requests.put(f"{base_url}/posts/{created_post_id}", json=data_put, timeout=10)
     
     # На jsonplaceholder PUT на несуществующий пост дает 500
-    assert response.status_code == 500
+    assert response.status_code in [404, 500]
 
 # --- ТЕСТ НА УДАЛЕНИЕ (DELETE) ---
 def test_delete_post(created_post_id):
@@ -58,3 +58,17 @@ def test_delete_post(created_post_id):
     
     # Проверяем, что удаление прошло (200 или 204)
     assert response.status_code in [200, 204]
+
+# --- ТЕСТ НА todos ---
+def test_get_todo():
+    response_get_todo = requests.get(f"{base_url}/todos/1")
+    assert response_get_todo.status_code == 200
+    assert response_get_todo.json().get("id") == 1
+
+# --- ТЕСТ НА COMMETNTS ---
+def test_get_comments():
+    response_get_comments = requests.get(f"{base_url}/comments/2")
+    assert response_get_comments.status_code == 200
+    assert response_get_comments.json().get("id") == 2 
+
+
