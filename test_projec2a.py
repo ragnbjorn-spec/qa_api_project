@@ -71,4 +71,13 @@ def test_get_comments():
     assert response_get_comments.status_code == 200
     assert response_get_comments.json().get("id") == 2 
 
+# --- ПАРАМЕТРИЗИРОВАННЫЙ ТЕСТ НА USERS ---
+
+@pytest.mark.parametrize('user_id', [1,2,3])
+def test_get_user(user_id):
+    url = f"{base_url}/users/{user_id}"
+    response = requests.get(url)
+    assert response.status_code == 200
+    assert response.json().get("id") == user_id
+
 
